@@ -30,5 +30,17 @@ form.addEventListener("submit", function (e) {
 });
 
 window.onload = function () {
-  const users = getUserIds();
+  populateUserDropdown();
 };
+
+function populateUserDropdown() {
+  const userSelect = document.getElementById("select-user");
+  const userIds = getUserIds();
+
+  userIds.forEach((userId) => {
+    const option = document.createElement("option");
+    option.value = userId;
+    option.textContent = userId;
+    userSelect.appendChild(option);
+  });
+}
