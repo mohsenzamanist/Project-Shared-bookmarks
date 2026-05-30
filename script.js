@@ -7,6 +7,17 @@
 import { getUserIds } from "./storage.js";
 
 window.onload = function () {
-  const users = getUserIds();
-  document.querySelector("body").innerText = `There are ${users.length} users`;
+  populateUserDropdown();
 };
+
+function populateUserDropdown() {
+  const userSelect = document.getElementById("select-user");
+  const userIds = getUserIds();
+
+  userIds.forEach((userId) => {
+    const option = document.createElement("option");
+    option.value = userId;
+    option.textContent = userId;
+    userSelect.appendChild(option);
+  });
+}
