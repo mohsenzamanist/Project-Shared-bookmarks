@@ -5,6 +5,7 @@
 // You can't open the index.html file using a file:// URL.
 
 import { getData, getUserIds, setData } from "./storage.js";
+import { formatTimestamp, sortBookmarksByDate } from "./utils.js";
 
 const form = document.querySelector("form");
 const userDropDown = document.getElementById("select-user");
@@ -18,14 +19,16 @@ function renderBookmarks(userId) {
     return;
   }
 
+  const sortedBookmarks = sortBookmarksByDate(bookmarks);
+
   bookmarksList.innerHTML = "";
 
-  bookmarks.forEach((bookmark) => {
+  sortedBookmarks.forEach((bookmark) => {
     const div = document.createElement("div");
     div.innerHTML = `
       <h3><a href="${bookmark.url}" target="_blank">${bookmark.title}</a></h3>
       <p>${bookmark.description}</p>
-      <p>Created at: ${bookmark.timeStamp}</p>
+      <p>Created at: ${formatTimestamp(bookmark.timeStamp)}</p>
       <p>Likes: ${bookmark.likes}</p>
       `;
 
