@@ -2,6 +2,10 @@
   "name": "project-shared-bookmarks",
   "version": "1.0.0",
   "scripts": {
-    "test": "node example.test.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "type": "module",
+  "devDependencies": {
+    "jest": "^30.4.2"
   }
 }

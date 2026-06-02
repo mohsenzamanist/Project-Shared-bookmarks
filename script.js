@@ -4,17 +4,25 @@
 // Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
 // You can't open the index.html file using a file:// URL.
 
-import { getData, getUserIds, setData } from "./storage.js";
+import { clearData, getData, getUserIds, setData } from "./storage.js";
 import { formatTimestamp, sortBookmarksByDate } from "./utils.js";
 
 const form = document.querySelector("form");
 const userDropDown = document.getElementById("select-user");
 const bookmarksList = document.querySelector(".bookmarks-list");
+const clearBtn = document.getElementById("clear");
 
-function renderBookmarks(userId) {
-  const bookmarks = getData(userId);
+function renderBookmarks() {
+  const userId = userDropDown.value;
 
-  if (!bookmarks || bookmarks.length === 0) {
+  if (!userId) {
+    bookmarksList.innerHTML = "<p>Please select a user.</p>";
+    return;
+  }
+
+  const bookmarks = getData(userId) || [];
+
+  if (bookmarks.length === 0) {
     bookmarksList.innerHTML = "<p>No bookmarks found for this user.</p>";
     return;
   }
@@ -28,11 +36,15 @@ function renderBookmarks(userId) {
     div.innerHTML = `
       <h3><a href="${bookmark.url}" target="_blank">${bookmark.title}</a></h3>
       <p>${bookmark.description}</p>
-      <p>Created at: ${formatTimestamp(bookmark.timeStamp)}</p>
+      <p>${formatTimestamp(bookmark.timeStamp)}</p>
       <button type="button" class="like-button">👍 Like (${bookmark.likes})</button>
+      <button type="button" class="copy-button">Copy</button>
       `;
 
+    div.classList.add("bookmark");
+
     const likeButton = div.querySelector(".like-button");
+    const cpyButton = div.querySelector(".copy-button");
 
     likeButton.addEventListener("click", function () {
       bookmark.likes += 1;
@@ -40,12 +52,30 @@ function renderBookmarks(userId) {
       renderBookmarks(userId);
     });
 
+    cpyButton.addEventListener("click", function () {
+      navigator.clipboard.writeText(bookmark.url);
+      cpyButton.textContent = "Copied";
+      setTimeout(() => {
+        cpyButton.textContent = "Copy";
+      }, 2000);
+    });
+
     bookmarksList.appendChild(div);
   });
 }
 
 userDropDown.addEventListener("change", function () {
-  renderBookmarks(userDropDown.value);
+  renderBookmarks();
+});
+clearBtn.addEventListener("click", function () {
+  const userId = userDropDown.value;
+
+  if (!userId) {
+    bookmarksList.innerHTML = "<p>Please select a user.</p>";
+    return;
+  }
+  clearData(userId);
+  renderBookmarks();
 });
 
 // Event listeners
