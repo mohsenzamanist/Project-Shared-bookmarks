@@ -29,8 +29,16 @@ function renderBookmarks(userId) {
       <h3><a href="${bookmark.url}" target="_blank">${bookmark.title}</a></h3>
       <p>${bookmark.description}</p>
       <p>Created at: ${formatTimestamp(bookmark.timeStamp)}</p>
-      <p>Likes: ${bookmark.likes}</p>
+      <button type="button" class="like-button">👍 Like (${bookmark.likes})</button>
       `;
+
+    const likeButton = div.querySelector(".like-button");
+
+    likeButton.addEventListener("click", function () {
+      bookmark.likes += 1;
+      setData(userId, sortedBookmarks);
+      renderBookmarks(userId);
+    });
 
     bookmarksList.appendChild(div);
   });
