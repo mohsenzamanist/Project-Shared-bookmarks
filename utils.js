@@ -14,11 +14,7 @@ export function formatTimestamp(isoString) {
 
 // Sort bookmarks by date in reverse chronological order (newest first)
 export function sortBookmarksByDate(bookmarks) {
-  if (!Array.isArray(bookmarks)) {
-    return [];
-  }
-
-  return [...bookmarks].sort(
+  return bookmarks.sort(
     (a, b) => new Date(b.timeStamp) - new Date(a.timeStamp),
   );
 }
