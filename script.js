@@ -49,7 +49,7 @@ function renderBookmarks() {
     likeButton.addEventListener("click", function () {
       bookmark.likes += 1;
       setData(userId, sortedBookmarks);
-      renderBookmarks(userId);
+      renderBookmarks();
     });
 
     cpyButton.addEventListener("click", function () {
@@ -97,7 +97,7 @@ form.addEventListener("submit", function (e) {
   existingBookmarks.push(finalObject);
   setData(userId, existingBookmarks);
 
-  renderBookmarks(userId);
+  renderBookmarks();
   form.reset();
 });
 
