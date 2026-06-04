@@ -1,7 +1,7 @@
 # Testing
 
 - The website must contain a drop-down which lists five users
-  -Tested manually by loading the application and confirming that users 1, 2, 3, 4 and 5 appear in the dropdown menu.
+  - Tested manually by loading the application and confirming that users 1, 2, 3, 4 and 5 appear in the dropdown menu.
 
 - Selecting a user must display the list of bookmarks for the relevant user
   - Tested manually by selecting different users and confirming that only bookmarks belonging to the selected user are displayed.
